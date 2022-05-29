@@ -25,7 +25,7 @@ function Youtube() {
 
 				return (
 					<article key={idx}>
-						<h2>{tit.length > 50 ? tit.substr(0, 30) + '...' : tit}</h2>
+						<h2>{tit.length > 20 ? tit.substr(0, 20) + '...' : tit}</h2>
 						<div className='txt'>
 							<p>{desc.length > 200 ? desc.substr(0, 200) + '...' : desc}</p>
 							<span>{date.split('T')[0]}</span>
