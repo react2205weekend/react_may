@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 
 function Location() {
 	const [Location, setLocation] = useState(null);
+	const [Traffic, setTraffic] = useState(false);
 	//window전역객체에서 kakao라는 이름의 객체를 비구조화 할당으로 직접 변수에 전달
 	const { kakao } = window;
 	const path = process.env.PUBLIC_URL;
@@ -50,24 +51,24 @@ function Location() {
 		setLocation(map_instance);
 	}, []);
 
+	useEffect(() => {
+		if (Location) {
+			Traffic
+				? Location.addOverlayMapTypeId(
+						kakao.maps.MapTypeId.TRAFFIC
+				  )
+				: Location.removeOverlayMapTypeId(
+						kakao.maps.MapTypeId.TRAFFIC
+				  );
+		}
+	}, [Traffic]);
+
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
-			<button
-				onClick={() => {
-					Location.addOverlayMapTypeId(
-						kakao.maps.MapTypeId.TRAFFIC
-					);
-				}}>
-				Traffic ON
-			</button>
-			<button
-				onClick={() => {
-					Location.removeOverlayMapTypeId(
-						kakao.maps.MapTypeId.TRAFFIC
-					);
-				}}>
-				Traffic OFF
+
+			<button onClick={() => setTraffic(!Traffic)}>
+				{Traffic ? 'Traffic OFF' : 'Traffic ON'}
 			</button>
 		</Layout>
 	);
