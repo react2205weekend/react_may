@@ -1,7 +1,8 @@
 import Layout from '../common/Layout';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function Location() {
+	const [Location, setLocation] = useState(null);
 	//window전역객체에서 kakao라는 이름의 객체를 비구조화 할당으로 직접 변수에 전달
 	const { kakao } = window;
 	const path = process.env.PUBLIC_URL;
@@ -46,11 +47,28 @@ function Location() {
 
 		//마커 인스턴스로부터 setMap함수 호출 (인수로 지도 인스턴스 전달)
 		marker.setMap(map_instance);
+		setLocation(map_instance);
 	}, []);
 
 	return (
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
+			<button
+				onClick={() => {
+					Location.addOverlayMapTypeId(
+						kakao.maps.MapTypeId.TRAFFIC
+					);
+				}}>
+				Traffic ON
+			</button>
+			<button
+				onClick={() => {
+					Location.removeOverlayMapTypeId(
+						kakao.maps.MapTypeId.TRAFFIC
+					);
+				}}>
+				Traffic OFF
+			</button>
 		</Layout>
 	);
 }
