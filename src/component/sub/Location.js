@@ -2,17 +2,41 @@ import Layout from '../common/Layout';
 import { useEffect, useRef, useState } from 'react';
 
 function Location() {
-	const [Location, setLocation] = useState(null);
-	const [Traffic, setTraffic] = useState(false);
-	//window전역객체에서 kakao라는 이름의 객체를 비구조화 할당으로 직접 변수에 전달
 	const { kakao } = window;
 	const path = process.env.PUBLIC_URL;
+	const info = [
+		{
+			title: '삼성동 코엑스',
+			latLng: new kakao.maps.LatLng(
+				37.5127099887378,
+				127.06069983235905
+			),
+			imgSrc: `${path}/img/marker1.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+		{
+			title: '한강',
+			latLng: new kakao.maps.LatLng(37.511507, 126.997067),
+			imgSrc: `${path}/img/marker2.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+		{
+			title: '남산',
+			latLng: new kakao.maps.LatLng(37.551776, 126.988169),
+			imgSrc: `${path}/img/marker3.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+	];
+	const [Info] = useState(info);
+	const [Location, setLocation] = useState(null);
+	const [Traffic, setTraffic] = useState(false);
+
 	const container = useRef(null);
 	const options = {
-		center: new kakao.maps.LatLng(
-			37.5127099887378,
-			127.06069983235905
-		),
+		center: Info[0].latLng,
 		level: 3,
 	};
 
@@ -22,25 +46,17 @@ function Location() {
 			options
 		);
 
-		//마커가 출력될 위치 인스턴스 생성
-		const markerPosition = new kakao.maps.LatLng(
-			37.5127099887378,
-			127.06069983235905
-		);
+		const markerPosition = Info[0].latLng;
 
-		//마커이미지 인스턴스 생성
-		const imageSrc = `${path}/img/marker1.png`;
-		const imageSize = new kakao.maps.Size(232, 99);
-		const imageOption = {
-			offset: new kakao.maps.Point(116, 99),
-		};
+		const imageSrc = Info[0].imgSrc;
+		const imageSize = Info[0].imgSize;
+		const imageOption = Info[0].imgPost;
 		const markerImage = new kakao.maps.MarkerImage(
 			imageSrc,
 			imageSize,
 			imageOption
 		);
 
-		//위치 인스턴스를 인수로 받아서 마커 인스턴스 생성
 		const marker = new kakao.maps.Marker({
 			position: markerPosition,
 			image: markerImage,
