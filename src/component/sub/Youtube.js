@@ -28,20 +28,39 @@ function Youtube() {
 
 					return (
 						<article key={idx}>
-							<h2>{tit.length > 20 ? tit.substr(0, 20) + '...' : tit}</h2>
+							<h2>
+								{tit.length > 20
+									? tit.substr(0, 20) + '...'
+									: tit}
+							</h2>
 							<div className='txt'>
-								<p>{desc.length > 200 ? desc.substr(0, 200) + '...' : desc}</p>
+								<p>
+									{desc.length > 200
+										? desc.substr(0, 200) + '...'
+										: desc}
+								</p>
 								<span>{date.split('T')[0]}</span>
 							</div>
-							<div className='pic' onClick={() => setOpen(true)}>
-								<img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
+							<div
+								className='pic'
+								onClick={() => setOpen(true)}>
+								<img
+									src={vid.snippet.thumbnails.standard.url}
+									alt={vid.snippet.title}
+								/>
 							</div>
 						</article>
 					);
 				})}
 			</Layout>
 
-			{open ? <Popup setOpen={setOpen} /> : null}
+			{open && (
+				<Popup setOpen={setOpen}>
+					<iframe
+						src={`https://www.youtube.com/embed/${vids[0].snippet.resourceId.videoId}`}
+						frameBorder='0'></iframe>
+				</Popup>
+			)}
 		</>
 	);
 }
