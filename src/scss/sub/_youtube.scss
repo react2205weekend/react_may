@@ -53,3 +53,35 @@
 		}
 	}
 }
+
+@media screen and (max-width: $tablet) {
+	.Youtube {
+		article {
+			padding: 50px 0px;
+			h2 {
+				width: 50%;
+			}
+			.txt {
+				width: 50%;
+			}
+			.pic {
+				width: 100%;
+				margin-top: 20px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mp) {
+	.Youtube {
+		article {
+			h2 {
+				width: 100%;
+				margin-bottom: 20px;
+			}
+			.txt {
+				width: 100%;
+			}
+		}
+	}
+}
