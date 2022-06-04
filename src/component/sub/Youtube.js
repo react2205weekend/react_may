@@ -4,12 +4,19 @@ import axios from 'axios';
 import Popup from '../common/Popup';
 
 function Youtube() {
-	const [vids, setVids] = useState([]);
-	const [open, setOpen] = useState(false);
+	const [Vids, setVids] = useState([]);
+	const [Open, setOpen] = useState(false);
+	const [Index, setIndex] = useState(0);
+
 	const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
 	const playlist = 'PLHtvRFLN5v-W-izd7V4JH2L4-RTW0WRi3';
 	const num = 8;
 	const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
+
+	const handlePopup = (index) => {
+		setOpen(true);
+		setIndex(index);
+	};
 
 	useEffect(() => {
 		axios.get(url).then((json) => {
@@ -21,7 +28,7 @@ function Youtube() {
 	return (
 		<>
 			<Layout name={'Youtube'}>
-				{vids.map((vid, idx) => {
+				{Vids.map((vid, idx) => {
 					const tit = vid.snippet.title;
 					const desc = vid.snippet.description;
 					const date = vid.snippet.publishedAt;
@@ -43,7 +50,7 @@ function Youtube() {
 							</div>
 							<div
 								className='pic'
-								onClick={() => setOpen(true)}>
+								onClick={() => handlePopup(idx)}>
 								<img
 									src={vid.snippet.thumbnails.standard.url}
 									alt={vid.snippet.title}
@@ -54,10 +61,11 @@ function Youtube() {
 				})}
 			</Layout>
 
-			{open && (
+			{Open && (
+				//미션 - 썸네일 클릭시 해당 썸네일에 맞는 영상 모달창에 출력 (35분까지)
 				<Popup setOpen={setOpen}>
 					<iframe
-						src={`https://www.youtube.com/embed/${vids[0].snippet.resourceId.videoId}`}
+						src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`}
 						frameBorder='0'></iframe>
 				</Popup>
 			)}
