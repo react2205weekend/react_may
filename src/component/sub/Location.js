@@ -49,6 +49,8 @@ function Location() {
 	};
 
 	useEffect(() => {
+		//지도 인스턴스가 추가될때마다 기존 map 프레임 안쪽의 내용일 일단은 제거하고 새로운 지도 생성
+		container.current.innerHTML = '';
 		const map_instance = new kakao.maps.Map(
 			container.current,
 			options
@@ -79,10 +81,17 @@ function Location() {
 		btns.current.children[Index].classList.add('on');
 		*/
 
-		//브라우저 리사이즈시 마커중앙 유지
-		window.addEventListener('resize', () => {
+		const mapCenter = () => {
+			console.log('함수호출');
 			map_instance.setCenter(Info[Index].latLng);
-		});
+		};
+
+		//브라우저 리사이즈시 마커중앙 유지
+		window.addEventListener('resize', mapCenter);
+
+		//해당 컴포넌트 unmount시 윈도우에 등록된 함수 제거
+		return () =>
+			window.removeEventListener('resize', mapCenter);
 	}, [Index]);
 
 	useEffect(() => {
