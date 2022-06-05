@@ -81,6 +81,20 @@ function Location() {
 		btns.current.children[Index].classList.add('on');
 		*/
 
+		//스카이뷰 전환버튼 추가
+		const mapTypeControl = new kakao.maps.MapTypeControl();
+		map_instance.addControl(
+			mapTypeControl,
+			kakao.maps.ControlPosition.TOPLEFT
+		);
+
+		// 확대 축소버튼 추가
+		const zoomControl = new kakao.maps.ZoomControl();
+		map_instance.addControl(
+			zoomControl,
+			kakao.maps.ControlPosition.RIGHT
+		);
+
 		const mapCenter = () => {
 			console.log('함수호출');
 			map_instance.setCenter(Info[Index].latLng);
