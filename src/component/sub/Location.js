@@ -16,15 +16,21 @@ function Location() {
 			imgPos: { offset: new kakao.maps.Point(116, 99) },
 		},
 		{
-			title: '한강',
-			latLng: new kakao.maps.LatLng(37.511507, 126.997067),
+			title: '한강 달빛광장',
+			latLng: new kakao.maps.LatLng(
+				37.511428115136866,
+				126.99762475590865
+			),
 			imgSrc: `${path}/img/marker2.png`,
 			imgSize: new kakao.maps.Size(232, 99),
 			imgPos: { offset: new kakao.maps.Point(116, 99) },
 		},
 		{
-			title: '남산',
-			latLng: new kakao.maps.LatLng(37.551776, 126.988169),
+			title: '남산 서울타워',
+			latLng: new kakao.maps.LatLng(
+				37.55163472656687,
+				126.98814003620416
+			),
 			imgSrc: `${path}/img/marker3.png`,
 			imgSize: new kakao.maps.Size(232, 99),
 			imgPos: { offset: new kakao.maps.Point(116, 99) },
@@ -33,10 +39,11 @@ function Location() {
 	const [Info] = useState(info);
 	const [Location, setLocation] = useState(null);
 	const [Traffic, setTraffic] = useState(false);
+	const [Index, setIndex] = useState(0);
 
 	const container = useRef(null);
 	const options = {
-		center: Info[0].latLng,
+		center: Info[Index].latLng,
 		level: 3,
 	};
 
@@ -46,11 +53,10 @@ function Location() {
 			options
 		);
 
-		const markerPosition = Info[0].latLng;
-
-		const imageSrc = Info[0].imgSrc;
-		const imageSize = Info[0].imgSize;
-		const imageOption = Info[0].imgPost;
+		const markerPosition = Info[Index].latLng;
+		const imageSrc = Info[Index].imgSrc;
+		const imageSize = Info[Index].imgSize;
+		const imageOption = Info[Index].imgPos;
 		const markerImage = new kakao.maps.MarkerImage(
 			imageSrc,
 			imageSize,
@@ -65,7 +71,7 @@ function Location() {
 		//마커 인스턴스로부터 setMap함수 호출 (인수로 지도 인스턴스 전달)
 		marker.setMap(map_instance);
 		setLocation(map_instance);
-	}, []);
+	}, [Index]);
 
 	useEffect(() => {
 		if (Location) {
@@ -83,9 +89,23 @@ function Location() {
 		<Layout name={'Location'}>
 			<div id='map' ref={container}></div>
 
-			<button onClick={() => setTraffic(!Traffic)}>
-				{Traffic ? 'Traffic OFF' : 'Traffic ON'}
-			</button>
+			<div className='btnSet'>
+				<button onClick={() => setTraffic(!Traffic)}>
+					{Traffic ? 'Traffic OFF' : 'Traffic ON'}
+				</button>
+
+				<ul>
+					<li onClick={() => setIndex(0)}>
+						{Info[0].title}
+					</li>
+					<li onClick={() => setIndex(1)}>
+						{Info[1].title}
+					</li>
+					<li onClick={() => setIndex(2)}>
+						{Info[2].title}
+					</li>
+				</ul>
+			</div>
 		</Layout>
 	);
 }
