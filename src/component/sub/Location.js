@@ -42,6 +42,7 @@ function Location() {
 	const [Index, setIndex] = useState(0);
 
 	const container = useRef(null);
+	//const btns = useRef(null);
 	const options = {
 		center: Info[Index].latLng,
 		level: 3,
@@ -71,6 +72,12 @@ function Location() {
 		//마커 인스턴스로부터 setMap함수 호출 (인수로 지도 인스턴스 전달)
 		marker.setMap(map_instance);
 		setLocation(map_instance);
+
+		/*
+		for (const btn of btns.current.children)
+			btn.classList.remove('on');
+		btns.current.children[Index].classList.add('on');
+		*/
 	}, [Index]);
 
 	useEffect(() => {
@@ -95,15 +102,18 @@ function Location() {
 				</button>
 
 				<ul>
-					<li onClick={() => setIndex(0)}>
-						{Info[0].title}
-					</li>
-					<li onClick={() => setIndex(1)}>
-						{Info[1].title}
-					</li>
-					<li onClick={() => setIndex(2)}>
-						{Info[2].title}
-					</li>
+					{Info.map((info, idx) => {
+						let on = '';
+						idx === Index ? (on = 'on') : (on = '');
+						return (
+							<li
+								className={on}
+								key={idx}
+								onClick={() => setIndex(idx)}>
+								{info.title}
+							</li>
+						);
+					})}
 				</ul>
 			</div>
 		</Layout>
