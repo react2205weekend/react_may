@@ -7,17 +7,40 @@ function Join() {
 	};
 
 	const [Val, setVal] = useState(initVal);
+	const [Err, setErr] = useState({});
+
+	//인수로 전달된 값으로 인증처리해서 에러객체값 반환함수
+	const check = (val) => {
+		const errs = {};
+
+		if (val.userid.length < 5) {
+			errs.userid = '아이디를 5글자 이상 입력하세요';
+		}
+		return errs;
+	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		console.log('name', name);
 		console.log('value', value);
+		//객체에서 변수값을 key에 넣을수가 없음
+		//객체에서 변수값을 key값으로 활용하러면 객체안에서 변수명을 대괄호로 묶어줌
+		//setVal({...Val, userid: 현재입력된 값})
 		setVal({ ...Val, [name]: value });
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		//순서2 - check함수 호출헤서 Val값에 담겨있는 값을
+		//check함수의 인수로 전달해서 err객체를 생성해서 반환
+		//반환된 에러객체는 다시 Err state에 옮겨담음
+		setErr(check(Val));
 	};
 
 	return (
 		<Layout name={'Join'}>
-			<form>
+			{/* 순서1: 전송버튼을 눌러서 handleSubmit함수 호출 */}
+			<form onSubmit={handleSubmit}>
 				<fieldset>
 					<legend>회원가입 폼 양식</legend>
 					<table border='1'>
