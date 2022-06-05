@@ -14,3 +14,20 @@ a {
 body {
 	background: #efefef;
 }
+legend,
+caption {
+	position: absolute;
+	top: -999999px;
+}
+fieldset {
+	border: none;
+}
+table {
+	border-collapse: collapse;
+	border: none;
+
+	th,
+	td {
+		border: none;
+	}
+}

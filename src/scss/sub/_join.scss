@@ -2,4 +2,36 @@
 	figure {
 		background: darkseagreen;
 	}
+
+	table {
+		width: 100%;
+		border-top: 2px solid #444;
+		border-bottom: 1px solid #444;
+
+		th {
+			width: 25%;
+			padding: 10px 0px;
+			padding-left: 30px;
+			text-align: left;
+			border-bottom: 1px solid #bbb;
+
+			&:last-child {
+				text-align: center;
+			}
+		}
+		td {
+			border-bottom: 1px solid #bbb;
+			border-left: 1px solid #bbb;
+			padding: 10px 0px;
+			padding-left: 30px;
+
+			input[type='text'],
+			input[type='password'],
+			textarea {
+				border: 1px solid #aaa;
+				padding: 6px 20px;
+				width: 40%;
+			}
+		}
+	}
 }
