@@ -78,6 +78,11 @@ function Location() {
 			btn.classList.remove('on');
 		btns.current.children[Index].classList.add('on');
 		*/
+
+		//브라우저 리사이즈시 마커중앙 유지
+		window.addEventListener('resize', () => {
+			map_instance.setCenter(Info[Index].latLng);
+		});
 	}, [Index]);
 
 	useEffect(() => {
