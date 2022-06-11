@@ -7,6 +7,7 @@ function Join() {
 		email: '',
 		pwd1: '',
 		pwd2: '',
+		gender: null,
 	};
 
 	const [Val, setVal] = useState(initVal);
@@ -25,8 +26,7 @@ function Join() {
 		}
 		//email체크 항목
 		if (val.email.length < 8 || !/@/.test(val.email)) {
-			errs.email =
-				'이메일은 최소 8글자 이상 @를 포함해주세요.';
+			errs.email = '이메일은 최소 8글자 이상 @를 포함해주세요.';
 		}
 		//pwd1 체크 항목
 		if (
@@ -42,17 +42,24 @@ function Join() {
 		if (val.pwd1 !== val.pwd2 || !val.pwd2) {
 			errs.pwd2 = '비밀번호 2개를 동일하게 입력하세요';
 		}
+		if (!Val.gender) {
+			errs.gender = '성별을 선택하세요.';
+		}
 		return errs;
 	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		console.log('name', name);
-		console.log('value', value);
 		//객체에서 변수값을 key에 넣을수가 없음
 		//객체에서 변수값을 key값으로 활용하러면 객체안에서 변수명을 대괄호로 묶어줌
 		//setVal({...Val, userid: 현재입력된 값})
 		setVal({ ...Val, [name]: value });
+	};
+
+	const handleRadio = (e) => {
+		const { name } = e.target;
+		const isCheck = e.target.checked;
+		setVal({ ...Val, [name]: isCheck });
 	};
 
 	const handleSubmit = (e) => {
@@ -143,6 +150,29 @@ function Join() {
 										onChange={handleChange}
 									/>
 									<span className='err'>{Err.email}</span>
+								</td>
+							</tr>
+
+							{/* gender */}
+							<tr>
+								<th scrope='row'>GENDER</th>
+								<td>
+									<label htmlFor='male'>Male</label>
+									<input
+										type='radio'
+										id='male'
+										name='gender'
+										onChange={handleRadio}
+									/>
+
+									<label htmlFor='female'>Female</label>
+									<input
+										type='radio'
+										id='Female'
+										name='gender'
+										onChange={handleRadio}
+									/>
+									<span className='err'>{Err.gender}</span>
 								</td>
 							</tr>
 
