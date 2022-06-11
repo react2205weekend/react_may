@@ -30,6 +30,12 @@
 					font: 12px/1 'arial';
 					color: #fff;
 					margin: 0px 10px;
+					cursor: pointer;
+					transition: 0.5s;
+
+					&:hover {
+						background: hotpink;
+					}
 				}
 			}
 		}
