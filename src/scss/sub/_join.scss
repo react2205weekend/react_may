@@ -71,3 +71,57 @@
 		}
 	}
 }
+
+@media screen and (max-width: $tablet) {
+	.Join {
+		table {
+			td {
+				input[type='text'],
+				input[type='password'],
+				select,
+				textarea {
+					width: 80%;
+				}
+
+				.err {
+					display: block;
+					margin-left: 0px;
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mp) {
+	.Join {
+		table {
+			th {
+				display: none;
+
+				&:last-child {
+					display: flex;
+					width: 100%;
+					justify-content: space-between;
+					padding-left: 0px;
+
+					input[type='submit'],
+					input[type='reset'] {
+						width: 130px;
+						margin: 0px;
+					}
+				}
+			}
+			td {
+				border-left: none;
+				padding-left: 0px;
+				input[type='text'],
+				input[type='password'],
+				select,
+				textarea {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
