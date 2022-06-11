@@ -1,5 +1,6 @@
 import Layout from '../common/Layout';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Join() {
 	const initVal = {
@@ -16,6 +17,8 @@ function Join() {
 	const [Val, setVal] = useState(initVal);
 	const [Err, setErr] = useState({});
 	const [Success, setSuccess] = useState(false);
+	const [Submit, setSubmit] = useState(false);
+	const history = useHistory();
 
 	//순서3 인수로 전달된 값으로 인증처리해서 에러객체값 반환함수
 	const check = (val) => {
@@ -104,12 +107,12 @@ function Join() {
 	useEffect(() => {
 		//console.log(Object.keys(Err).length);
 		const len = Object.keys(Err).length;
-		if (len === 0) {
+		if (len === 0 && Submit) {
 			setSuccess(true);
-			console.log('인증통과');
+			history.push('/');
+			window.scroll(0, 0);
 		} else {
 			setSuccess(false);
-			console.log('인증실패');
 		}
 	}, [Err]);
 
@@ -284,7 +287,11 @@ function Join() {
 							<tr>
 								<th colSpan='2'>
 									<input type='reset' value='CANCEL' />
-									<input type='submit' value='SUBMIT' />
+									<input
+										type='submit'
+										value='SUBMIT'
+										onClick={() => setSubmit(true)}
+									/>
 								</th>
 							</tr>
 						</tbody>
