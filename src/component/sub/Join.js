@@ -8,12 +8,14 @@ function Join() {
 		pwd1: '',
 		pwd2: '',
 		edu: '',
+		comments: '',
 		gender: null,
 		interests: null,
 	};
 
 	const [Val, setVal] = useState(initVal);
 	const [Err, setErr] = useState({});
+	const [Success, setSuccess] = useState(false);
 
 	//순서3 인수로 전달된 값으로 인증처리해서 에러객체값 반환함수
 	const check = (val) => {
@@ -52,6 +54,9 @@ function Join() {
 		}
 		if (Val.edu === '') {
 			errs.edu = '최종학력을 선택하세요';
+		}
+		if (Val.comments < 20) {
+			errs.comments = '남기는 말은 20글자 이상 입력하세요';
 		}
 		return errs;
 	};
@@ -97,7 +102,15 @@ function Join() {
 	};
 
 	useEffect(() => {
-		console.log(Err);
+		//console.log(Object.keys(Err).length);
+		const len = Object.keys(Err).length;
+		if (len === 0) {
+			setSuccess(true);
+			console.log('인증통과');
+		} else {
+			setSuccess(false);
+			console.log('인증실패');
+		}
 	}, [Err]);
 
 	return (
@@ -247,6 +260,23 @@ function Join() {
 										<option value='college'>대학교 졸업</option>
 									</select>
 									<span className='err'>{Err.edu}</span>
+								</td>
+							</tr>
+
+							{/* comments */}
+							<tr>
+								<th scope='row'>
+									<label htmlFor='comments'>COMMENTS</label>
+								</th>
+								<td>
+									<textarea
+										name='comments'
+										id='comments'
+										cols='30'
+										rows='5'
+										placeholder='남기는 말을 입력하세요'
+										onChange={handleChange}></textarea>
+									<span className='err'>{Err.comments}</span>
 								</td>
 							</tr>
 
