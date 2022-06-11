@@ -10,26 +10,40 @@
 
 		th {
 			width: 25%;
-			padding: 10px 0px;
+			padding: 14px 0px;
 			padding-left: 30px;
 			text-align: left;
 			border-bottom: 1px solid #bbb;
 
 			&:last-child {
 				text-align: center;
+
+				input[type='submit'],
+				input[type='reset'] {
+					width: 150px;
+					height: 30px;
+					border: none;
+					background: #333;
+					display: inline-flex;
+					justify-content: center;
+					align-items: center;
+					font: 12px/1 'arial';
+					color: #fff;
+					margin: 0px 10px;
+				}
 			}
 		}
 		td {
 			border-bottom: 1px solid #bbb;
 			border-left: 1px solid #bbb;
-			padding: 10px 0px;
+			padding: 14px 0px;
 			padding-left: 30px;
 
 			input[type='text'],
 			input[type='password'],
 			textarea {
 				border: 1px solid #aaa;
-				padding: 6px 20px;
+				padding: 8px 20px;
 				width: 40%;
 			}
 
