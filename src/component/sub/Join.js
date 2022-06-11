@@ -7,7 +7,9 @@ function Join() {
 		email: '',
 		pwd1: '',
 		pwd2: '',
+		edu: '',
 		gender: null,
+		interests: null,
 	};
 
 	const [Val, setVal] = useState(initVal);
@@ -48,6 +50,9 @@ function Join() {
 		if (!Val.interests) {
 			errs.interests = '관심사를 하나이상 선택하세요';
 		}
+		if (Val.edu === '') {
+			errs.edu = '최종학력을 선택하세요';
+		}
 		return errs;
 	};
 
@@ -75,6 +80,12 @@ function Join() {
 		});
 
 		setVal({ ...Val, [name]: isCheck });
+	};
+
+	const handleSelect = (e) => {
+		const { name, value } = e.target;
+		//const isSelected = e.target.options[e.target.selectedIndex].value;
+		setVal({ ...Val, [name]: value });
 	};
 
 	const handleSubmit = (e) => {
@@ -219,6 +230,23 @@ function Join() {
 										onChange={handleCheck}
 									/>
 									<span className='err'>{Err.interests}</span>
+								</td>
+							</tr>
+
+							{/* edu */}
+							<tr>
+								<th scope='row'>
+									<label htmlFor='edu'>Education</label>
+								</th>
+								<td>
+									<select name='edu' id='edu' onChange={handleSelect}>
+										<option value=''>학력을 선택하세요</option>
+										<option value='elementary-school'>초등학교 졸업</option>
+										<option value='middle-school'>중학교 졸업</option>
+										<option value='high-school'>고등학교 졸업</option>
+										<option value='college'>대학교 졸업</option>
+									</select>
+									<span className='err'>{Err.edu}</span>
 								</td>
 							</tr>
 
