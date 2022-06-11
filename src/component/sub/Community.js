@@ -55,16 +55,20 @@ function Community() {
 					ref={textarea}></textarea>
 				<br />
 
-				<button onClick={resetPost}>CANCEL</button>
-				<button onClick={createPost}>WRITE</button>
+				<div className='btnSet'>
+					<button onClick={resetPost}>CANCEL</button>
+					<button onClick={createPost}>WRITE</button>
+				</div>
 			</div>
 
 			<div className='showBox'>
 				{Posts.map((post, idx) => {
 					return (
 						<article key={idx}>
-							<h2>{post.title}</h2>
-							<p>{post.content}</p>
+							<div className='txt'>
+								<h2>{post.title}</h2>
+								<p>{post.content}</p>
+							</div>
 
 							<div className='btnSet'>
 								<button>EDIT</button>
