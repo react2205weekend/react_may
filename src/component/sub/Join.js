@@ -104,6 +104,12 @@ function Join() {
 		setErr(check(Val));
 	};
 
+	const handleReset = () => {
+		setSubmit(false);
+		setErr({});
+		setVal(initVal);
+	};
+
 	useEffect(() => {
 		//console.log(Object.keys(Err).length);
 		const len = Object.keys(Err).length;
@@ -286,7 +292,7 @@ function Join() {
 							{/* btnSet */}
 							<tr>
 								<th colSpan='2'>
-									<input type='reset' value='CANCEL' />
+									<input type='reset' value='CANCEL' onClick={handleReset} />
 									<input
 										type='submit'
 										value='SUBMIT'
