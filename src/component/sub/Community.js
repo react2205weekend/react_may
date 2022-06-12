@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from 'react';
 function Community() {
 	const input = useRef(null);
 	const textarea = useRef(null);
+	const inputEdit = useRef(null);
+	const textareaEdit = useRef(null);
 	const dummyPosts = [
 		{ title: 'Hello5', content: 'Here comes description in detail.' },
 		{ title: 'Hello4', content: 'Here comes description in detail.' },
@@ -16,6 +18,8 @@ function Community() {
 	const resetPost = () => {
 		input.current.value = '';
 		textarea.current.value = '';
+		inputEdit.current.value = '';
+		textareaEdit.current.value = '';
 	};
 
 	const createPost = () => {
@@ -37,6 +41,25 @@ function Community() {
 	const deletePost = (index) => {
 		if (!window.confirm('정말 삭제하시겠습니까')) return;
 		setPosts(Posts.filter((_, idx) => idx !== index));
+	};
+
+	//게시글 수정함수
+	const updatePost = (index) => {
+		if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
+			resetPost();
+			return alert('수정할 제목과 본문을 모두 입력하세요.');
+		}
+
+		setPosts(
+			Posts.map((post, idx) => {
+				if (idx === index) {
+					post.title = inputEdit.current.value;
+					post.content = textareaEdit.current.value;
+					post.enableUpdate = false;
+				}
+				return post;
+			})
+		);
 	};
 
 	//게시글을 수정모드로 변경하는 함수정의
@@ -89,17 +112,22 @@ function Community() {
 								//수정 모드 UI
 								<>
 									<div className='txt'>
-										<input type='text' defaultValue={post.title} />
+										<input
+											type='text'
+											defaultValue={post.title}
+											ref={inputEdit}
+										/>
 										<br />
 										<textarea
 											cols='30'
 											rows='5'
+											ref={textareaEdit}
 											defaultValue={post.content}></textarea>
 									</div>
 
 									<div className='btnSet'>
 										<button onClick={() => disableUpdate(idx)}>CANCEL</button>
-										<button>SAVE</button>
+										<button onClick={() => updatePost(idx)}>SAVE</button>
 									</div>
 								</>
 							) : (
