@@ -1,8 +1,26 @@
-section {
+#news {
 	width: 100%;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	font-size: 10vw;
+
+	article {
+		width: 15%;
+		min-height: 180px;
+		border: 1px solid #888;
+		padding: 20px;
+		margin: 10px;
+
+		h2 {
+			font: 16px/1 'arial';
+			color: #444;
+			margin-bottom: 20px;
+		}
+		p {
+			font: 12px/1.2 'arial';
+			color: #777;
+		}
+	}
 }
