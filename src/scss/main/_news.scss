@@ -29,9 +29,11 @@
 @media screen and (max-width: $tablet) {
 	#news {
 		padding: 0px 30px;
+		justify-content: space-between;
 
 		article {
 			width: 48%;
+			margin: 0px;
 			margin-bottom: 30px;
 		}
 	}
