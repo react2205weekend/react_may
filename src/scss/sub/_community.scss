@@ -42,15 +42,38 @@
 				padding: 30px;
 				margin-bottom: 40px;
 				display: flex;
+				flex-wrap: wrap;
 				justify-content: space-between;
+				align-content: center;
 
 				.txt {
-					width: 60%;
+					width: 75%;
 				}
-				.butSet {
+				.btnSet {
 					display: flex;
 					align-items: center;
-					width: 35%;
+					width: 25%;
+					justify-content: flex-end;
+
+					button {
+						margin-left: 10px;
+						border: 1px solid #bbb;
+						width: 80px;
+						height: 26px;
+						font: 11px/1 'arial';
+						color: #999;
+						display: inline-flex;
+						justify-content: center;
+						align-items: center;
+						cursor: pointer;
+						transition: 0.5s;
+
+						&:hover {
+							border: 1px solid #333;
+							background: #333;
+							color: orange;
+						}
+					}
 				}
 			}
 		}
