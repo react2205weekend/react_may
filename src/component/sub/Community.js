@@ -6,13 +6,6 @@ function Community() {
 	const textarea = useRef(null);
 	const inputEdit = useRef(null);
 	const textareaEdit = useRef(null);
-	const dummyPosts = [
-		{ title: 'Hello5', content: 'Here comes description in detail.' },
-		{ title: 'Hello4', content: 'Here comes description in detail.' },
-		{ title: 'Hello3', content: 'Here comes description in detail.' },
-		{ title: 'Hello2', content: 'Here comes description in detail.' },
-		{ title: 'Hello1', content: 'Here comes description in detail.' },
-	];
 
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
