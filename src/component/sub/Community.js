@@ -35,8 +35,18 @@ function Community() {
 	};
 
 	const deletePost = (index) => {
-		console.log(index);
+		if (!window.confirm('정말 삭제하시겠습니까')) return;
 		setPosts(Posts.filter((_, idx) => idx !== index));
+	};
+
+	//게시글을 수정모드로 변경하는 함수정의
+	const enableUpdate = (index) => {
+		setPosts(
+			Posts.map((post, idx) => {
+				if (idx === index) post.enableUpdate = true;
+				return post;
+			})
+		);
 	};
 
 	useEffect(() => {
@@ -71,7 +81,7 @@ function Community() {
 							</div>
 
 							<div className='btnSet'>
-								<button>EDIT</button>
+								<button onClick={() => enableUpdate(idx)}>EDIT</button>
 								<button onClick={() => deletePost(idx)}>DELETE</button>
 							</div>
 						</article>
