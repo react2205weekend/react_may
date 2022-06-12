@@ -4,7 +4,7 @@ import Footer from './component/common/Footer';
 
 //main
 import Visual from './component/main/Visual';
-import Content from './component/main/Content';
+import News from './component/main/News';
 
 //sub
 import Department from './component/sub/Department';
@@ -23,7 +23,7 @@ function App() {
 				<Route exact path='/'>
 					<Header type={'main'} />
 					<Visual />
-					<Content />
+					<News />
 				</Route>
 
 				<Route path='/' render={() => <Header type={'sub'} />} />
