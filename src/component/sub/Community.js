@@ -13,7 +13,12 @@ function Community() {
 		{ title: 'Hello2', content: 'Here comes description in detail.' },
 		{ title: 'Hello1', content: 'Here comes description in detail.' },
 	];
-	const [Posts, setPosts] = useState(dummyPosts);
+
+	const getLocalData = () => {
+		const data = localStorage.getItem('post');
+		return JSON.parse(data);
+	};
+	const [Posts, setPosts] = useState(getLocalData());
 	const [Allowed, setAllowed] = useState(true);
 
 	const resetPost = () => {
@@ -90,6 +95,7 @@ function Community() {
 
 	useEffect(() => {
 		console.log(Posts);
+		localStorage.setItem('post', JSON.stringify(Posts));
 	}, [Posts]);
 
 	return (
