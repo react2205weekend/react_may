@@ -6,6 +6,7 @@
 	flex-wrap: wrap;
 	align-content: center;
 	font-size: 10vw;
+	perspective: 600px;
 
 	article {
 		width: 15%;
@@ -13,6 +14,15 @@
 		border: 1px solid #888;
 		padding: 20px;
 		margin: 10px;
+		transform: translateY(100px) rotateY(180deg);
+		opacity: 0;
+		transition-duration: 0.5s;
+
+		@for $i from 0 to 4 {
+			&:nth-of-type(#{$i + 1}) {
+				transition-delay: 0.2s * $i;
+			}
+		}
 
 		h2 {
 			font: 16px/1 'arial';
@@ -22,6 +32,13 @@
 		p {
 			font: 12px/1.2 'arial';
 			color: #777;
+		}
+	}
+
+	&.on {
+		article {
+			transform: translateY(0px) rotateY(0deg);
+			opacity: 1;
 		}
 	}
 }
