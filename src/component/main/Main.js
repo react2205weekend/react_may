@@ -4,6 +4,7 @@ import Pics from './Pics';
 import Vids from './Vids';
 import Visual from './Visual';
 import Btns from './Btns';
+import Anime from '../../asset/anim.js';
 
 import { useRef, useEffect, useState } from 'react';
 
@@ -17,7 +18,8 @@ function Main() {
 		const secs = main.current.querySelectorAll('.myScroll');
 
 		for (const sec of secs) pos.current.push(sec.offsetTop);
-		console.log(pos.current);
+
+		//window.scroll(0, pos.current[Index]);
 	};
 
 	useEffect(() => {
@@ -28,7 +30,13 @@ function Main() {
 	}, []);
 
 	useEffect(() => {
-		console.log(Index);
+		new Anime(window, {
+			prop: 'scroll',
+			value: pos.current[Index],
+			duration: 500,
+		});
+
+		console.log(pos.current[Index]);
 	}, [Index]);
 
 	return (
