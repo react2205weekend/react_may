@@ -1,5 +1,6 @@
 function Pics({ Scrolled, start, base }) {
-	const position = Scrolled - start - base;
+	let position = 0;
+	if (start) position = Scrolled - start - base;
 
 	return (
 		<section id='pics' className='myScroll'>
