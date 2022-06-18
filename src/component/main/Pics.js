@@ -1,7 +1,11 @@
-function Pics() {
+import { startTransition } from 'react';
+
+function Pics({ Scrolled, start, base }) {
+	const position = Scrolled - start - base;
+
 	return (
 		<section id='pics' className='myScroll'>
-			Pics
+			<p style={{ left: 100 + position }}>FLICKR</p>
 		</section>
 	);
 }
