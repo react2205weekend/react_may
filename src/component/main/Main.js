@@ -16,17 +16,30 @@ function Main() {
 	const getPos = () => {
 		pos.current = [];
 		const secs = main.current.querySelectorAll('.myScroll');
-
 		for (const sec of secs) pos.current.push(sec.offsetTop);
+	};
 
-		//window.scroll(0, pos.current[Index]);
+	const activation = () => {
+		const scroll = window.scrollY;
+		const btns = main.current.querySelectorAll('.scroll_navi li');
+
+		pos.current.map((pos, idx) => {
+			if (scroll >= pos) {
+				for (const btn of btns) btn.classList.remove('on');
+				btns[idx].classList.add('on');
+			}
+		});
 	};
 
 	useEffect(() => {
 		getPos();
 
 		window.addEventListener('resize', getPos);
-		return () => window.removeEventListener('resize', getPos);
+		window.addEventListener('scroll', activation);
+		return () => {
+			window.removeEventListener('resize', getPos);
+			window.removeEventListener('scroll', activation);
+		};
 	}, []);
 
 	useEffect(() => {
