@@ -4,19 +4,21 @@ import { useRef, useState } from 'react';
 function Visual() {
 	console.log('visual');
 	const panel = useRef(null);
-	let panel_li = null;
-	let len = null;
 
 	const [Index, setIndex] = useState(0);
 	const [EnableClick, setEnableClick] = useState(true);
 
-	const showPrev = () => {
+	const init = () => {
 		if (!EnableClick) return;
-		panel_li = panel.current.children;
-		len = panel_li.length;
+		const panel_li = panel.current.children;
+		const len = panel_li.length;
 		const currentEl = panel.current.querySelector('.on');
 		const current_index = Array.from(panel_li).indexOf(currentEl);
+		return [currentEl, current_index, len];
+	};
 
+	const showPrev = () => {
+		const [currentEl, current_index, len] = init();
 		let prev_index = null;
 		current_index !== 0
 			? (prev_index = current_index - 1)
@@ -26,11 +28,7 @@ function Visual() {
 	};
 
 	const showNext = () => {
-		if (!EnableClick) return;
-		panel_li = panel.current.children;
-		len = panel_li.length;
-		const currentEl = panel.current.querySelector('.on');
-		const current_index = Array.from(panel_li).indexOf(currentEl);
+		const [currentEl, current_index, len] = init();
 		let next_index = null;
 		current_index !== len - 1
 			? (next_index = current_index + 1)
@@ -39,9 +37,19 @@ function Visual() {
 		showSlide(currentEl, next_index, 1);
 	};
 
+	const showNavi = (index) => {
+		const [currentEl, current_index] = init();
+
+		const target_index = index;
+
+		if (target_index > current_index) showSlide(currentEl, target_index, 1);
+		if (target_index < current_index) showSlide(currentEl, target_index, -1);
+	};
+
 	const showSlide = (el, index, direction) => {
 		setEnableClick(false);
-		panel_li = panel.current.children;
+		const panel_li = panel.current.children;
+
 		//기존 활성화 패널  왼쪽 밖으로 모션 이동
 		new Anime(el, {
 			prop: 'left',
@@ -68,18 +76,6 @@ function Visual() {
 		});
 
 		setIndex(index);
-	};
-
-	const showNavi = (index) => {
-		if (!EnableClick) return;
-		panel_li = panel.current.children;
-		len = panel_li.length;
-		const target_index = index;
-		const currentEl = panel.current.querySelector('.on');
-		const current_index = Array.from(panel_li).indexOf(currentEl);
-
-		if (target_index > current_index) showSlide(currentEl, target_index, 1);
-		if (target_index < current_index) showSlide(currentEl, target_index, -1);
 	};
 
 	return (
