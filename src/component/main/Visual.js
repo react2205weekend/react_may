@@ -4,9 +4,11 @@ import { useRef, useState } from 'react';
 function Visual() {
 	console.log('visual');
 	const panel = useRef(null);
+	const Index = useRef(0);
+	const EnableClick = useRef(true);
 
-	const [Index, setIndex] = useState(0);
-	const [EnableClick, setEnableClick] = useState(true);
+	//const [Index, setIndex] = useState(0);
+	//const [EnableClick, setEnableClick] = useState(true);
 
 	const init = () => {
 		if (!EnableClick) return;
@@ -19,6 +21,7 @@ function Visual() {
 
 	const showPrev = () => {
 		const [currentEl, current_index, len] = init();
+
 		let prev_index = null;
 		current_index !== 0
 			? (prev_index = current_index - 1)
@@ -39,7 +42,6 @@ function Visual() {
 
 	const showNavi = (index) => {
 		const [currentEl, current_index] = init();
-
 		const target_index = index;
 
 		if (target_index > current_index) showSlide(currentEl, target_index, 1);
@@ -47,7 +49,7 @@ function Visual() {
 	};
 
 	const showSlide = (el, index, direction) => {
-		setEnableClick(false);
+		EnableClick.current = false;
 		const panel_li = panel.current.children;
 
 		//기존 활성화 패널  왼쪽 밖으로 모션 이동
@@ -71,11 +73,11 @@ function Visual() {
 			duration: 500,
 			callback: () => {
 				panel_li[index].classList.add('on');
-				setEnableClick(true);
+				EnableClick.current = true;
 			},
 		});
 
-		setIndex(index);
+		Index.current = index;
 	};
 
 	return (
@@ -102,7 +104,7 @@ function Visual() {
 				<ul className='navi'>
 					{[0, 1, 2, 3, 4].map((num) => {
 						let on = '';
-						Index === num ? (on = 'on') : (on = '');
+						Index.current === num ? (on = 'on') : (on = '');
 						return (
 							<li key={num} className={on} onClick={() => showNavi(num)}></li>
 						);
