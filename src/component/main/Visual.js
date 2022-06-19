@@ -1,10 +1,11 @@
 import Anime from '../../asset/anim.js';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 function Visual() {
 	const panel = useRef(null);
 	let panel_li = null;
 	let len = null;
+	const [Index, setIndex] = useState(0);
 
 	const showPrev = () => {
 		panel_li = panel.current.children;
@@ -58,6 +59,8 @@ function Visual() {
 				panel_li[index].classList.add('on');
 			},
 		});
+
+		setIndex(index);
 	};
 
 	const showNavi = (index) => {
@@ -94,7 +97,11 @@ function Visual() {
 
 				<ul className='navi'>
 					{[0, 1, 2, 3, 4].map((num) => {
-						return <li key={num} onClick={() => showNavi(num)}></li>;
+						let on = '';
+						Index === num ? (on = 'on') : (on = '');
+						return (
+							<li key={num} className={on} onClick={() => showNavi(num)}></li>
+						);
 					})}
 				</ul>
 
