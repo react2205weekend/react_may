@@ -8,9 +8,7 @@ function Visual() {
 	const Index = useRef(0);
 	const EnableClick = useRef(true);
 
-	//const [Index, setIndex] = useState(0);
-	//const [EnableClick, setEnableClick] = useState(true);
-
+	//현재활성화된 패널과 순서값, 전체패널갯수를 리턴
 	const init = () => {
 		const panel_li = panel.current.children;
 		const len = panel_li.length;
@@ -19,6 +17,7 @@ function Visual() {
 		return [currentEl, current_index, len];
 	};
 
+	//앞으로 활성화될 이전 패널 순번을 구하는 함수
 	const showPrev = () => {
 		const [currentEl, current_index, len] = init();
 
@@ -30,6 +29,7 @@ function Visual() {
 		if (EnableClick.current) showSlide(currentEl, prev_index, -1);
 	};
 
+	//앞으로 활성화될 다음 패널 순번을 구하는 함수
 	const showNext = () => {
 		const [currentEl, current_index, len] = init();
 		let next_index = null;
@@ -40,6 +40,7 @@ function Visual() {
 		if (EnableClick.current) showSlide(currentEl, next_index, 1);
 	};
 
+	//클릭한 네비버튼의 순번을 통해서 이전, 다음 패널을 보여줄지 결정하는 함수
 	const showNavi = (index) => {
 		const [currentEl, current_index] = init();
 		const target_index = index;
@@ -49,6 +50,7 @@ function Visual() {
 		if (target_index < current_index) showSlide(currentEl, target_index, -1);
 	};
 
+	//실제로 인수로 받은 순번을 활성화시키면서 모션을 발생시키는 함수
 	const showSlide = (el, index, direction) => {
 		EnableClick.current = false;
 		const panel_li = panel.current.children;
@@ -82,6 +84,7 @@ function Visual() {
 		activation(index);
 	};
 
+	//현재 활성화되는 순서값에 따라서 버튼 활성화 함수
 	const activation = (index) => {
 		for (const el of navi.current.children) el.classList.remove('on');
 		navi.current.children[index].classList.add('on');
