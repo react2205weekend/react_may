@@ -2,12 +2,16 @@ import Anime from '../../asset/anim.js';
 import { useRef, useState } from 'react';
 
 function Visual() {
+	console.log('visual');
 	const panel = useRef(null);
 	let panel_li = null;
 	let len = null;
+
 	const [Index, setIndex] = useState(0);
+	const [EnableClick, setEnableClick] = useState(true);
 
 	const showPrev = () => {
+		if (!EnableClick) return;
 		panel_li = panel.current.children;
 		len = panel_li.length;
 		const currentEl = panel.current.querySelector('.on');
@@ -22,6 +26,7 @@ function Visual() {
 	};
 
 	const showNext = () => {
+		if (!EnableClick) return;
 		panel_li = panel.current.children;
 		len = panel_li.length;
 		const currentEl = panel.current.querySelector('.on');
@@ -35,6 +40,7 @@ function Visual() {
 	};
 
 	const showSlide = (el, index, direction) => {
+		setEnableClick(false);
 		panel_li = panel.current.children;
 		//기존 활성화 패널  왼쪽 밖으로 모션 이동
 		new Anime(el, {
@@ -57,6 +63,7 @@ function Visual() {
 			duration: 500,
 			callback: () => {
 				panel_li[index].classList.add('on');
+				setEnableClick(true);
 			},
 		});
 
@@ -64,6 +71,7 @@ function Visual() {
 	};
 
 	const showNavi = (index) => {
+		if (!EnableClick) return;
 		panel_li = panel.current.children;
 		len = panel_li.length;
 		const target_index = index;
