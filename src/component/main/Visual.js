@@ -3,10 +3,26 @@ import { useRef } from 'react';
 
 function Visual() {
 	const panel = useRef(null);
+	let panel_li = null;
+	let len = null;
+
+	const showPrev = () => {
+		panel_li = panel.current.children;
+		len = panel_li.length;
+		const currentEl = panel.current.querySelector('.on');
+		const current_index = Array.from(panel_li).indexOf(currentEl);
+
+		let prev_index = null;
+		current_index !== 0
+			? (prev_index = current_index - 1)
+			: (prev_index = len - 1);
+
+		showSlide(currentEl, prev_index, -1);
+	};
 
 	const showNext = () => {
-		const panel_li = panel.current.children;
-		const len = panel_li.length;
+		panel_li = panel.current.children;
+		len = panel_li.length;
 		const currentEl = panel.current.querySelector('.on');
 		const current_index = Array.from(panel_li).indexOf(currentEl);
 		let next_index = null;
@@ -18,7 +34,7 @@ function Visual() {
 	};
 
 	const showSlide = (el, index, direction) => {
-		const panel_li = panel.current.children;
+		panel_li = panel.current.children;
 		//기존 활성화 패널  왼쪽 밖으로 모션 이동
 		new Anime(el, {
 			prop: 'left',
@@ -73,7 +89,7 @@ function Visual() {
 					<li></li>
 				</ul>
 
-				<button className='prev'></button>
+				<button className='prev' onClick={showPrev}></button>
 				<button className='next' onClick={showNext}></button>
 			</article>
 		</figure>
