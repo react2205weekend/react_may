@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 function Visual() {
 	console.log('visual');
 	const panel = useRef(null);
+	const navi = useRef(null);
 	const Index = useRef(0);
 	const EnableClick = useRef(true);
 
@@ -11,7 +12,6 @@ function Visual() {
 	//const [EnableClick, setEnableClick] = useState(true);
 
 	const init = () => {
-		if (!EnableClick) return;
 		const panel_li = panel.current.children;
 		const len = panel_li.length;
 		const currentEl = panel.current.querySelector('.on');
@@ -27,7 +27,7 @@ function Visual() {
 			? (prev_index = current_index - 1)
 			: (prev_index = len - 1);
 
-		showSlide(currentEl, prev_index, -1);
+		if (EnableClick.current) showSlide(currentEl, prev_index, -1);
 	};
 
 	const showNext = () => {
@@ -37,13 +37,14 @@ function Visual() {
 			? (next_index = current_index + 1)
 			: (next_index = 0);
 
-		showSlide(currentEl, next_index, 1);
+		if (EnableClick.current) showSlide(currentEl, next_index, 1);
 	};
 
 	const showNavi = (index) => {
 		const [currentEl, current_index] = init();
 		const target_index = index;
 
+		if (!EnableClick.current) return;
 		if (target_index > current_index) showSlide(currentEl, target_index, 1);
 		if (target_index < current_index) showSlide(currentEl, target_index, -1);
 	};
@@ -78,6 +79,12 @@ function Visual() {
 		});
 
 		Index.current = index;
+		activation(index);
+	};
+
+	const activation = (index) => {
+		for (const el of navi.current.children) el.classList.remove('on');
+		navi.current.children[index].classList.add('on');
 	};
 
 	return (
@@ -101,7 +108,7 @@ function Visual() {
 					</li>
 				</ul>
 
-				<ul className='navi'>
+				<ul className='navi' ref={navi}>
 					{[0, 1, 2, 3, 4].map((num) => {
 						let on = '';
 						Index.current === num ? (on = 'on') : (on = '');
