@@ -14,7 +14,17 @@ function Vids() {
 				loop={true}
 				spaceBetween={50}
 				slidesPerView={3}
-				centeredSlides={true}>
+				centeredSlides={true}
+				breakpoints={{
+					320: {
+						slidesPerView: 1,
+						spaceBetween: 20,
+					},
+					1180: {
+						slidesPerView: 3,
+						spaceBetween: 50,
+					},
+				}}>
 				<SwiperSlide>
 					<div className='inner'>1</div>
 				</SwiperSlide>

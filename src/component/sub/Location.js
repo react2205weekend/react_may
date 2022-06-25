@@ -96,7 +96,6 @@ function Location() {
 		);
 
 		const mapCenter = () => {
-			console.log('함수호출');
 			map_instance.setCenter(Info[Index].latLng);
 		};
 
