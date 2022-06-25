@@ -4,12 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import Masonry from 'react-masonry-component';
 
 function Gallery() {
-	const key = '4612601b324a2fe5a1f5f7402bf8d87a';
-	const method_interest = 'flickr.interestingness.getList';
-	const method_search = 'flickr.photos.search';
-	const num = 500;
-	const url_interest = `https://www.flickr.com/services/rest/?method=${method_interest}&api_key=${key}&per_page=${num}&format=json&nojsoncallback=1`;
-	const url_search = `https://www.flickr.com/services/rest/?method=${method_search}&api_key=${key}&per_page=${num}&tags=ocean&format=json&nojsoncallback=1`;
 	const frame = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
@@ -18,7 +12,17 @@ function Gallery() {
 		transitionDuration: '0.5s',
 	};
 
-	const getFlickr = async (url) => {
+	const getFlickr = async (opt) => {
+		const key = '4612601b324a2fe5a1f5f7402bf8d87a';
+		const method_interest =
+			'flickr.interestingness.getList';
+		const method_search = 'flickr.photos.search';
+		let url = '';
+		if (opt.type === 'interest')
+			url = `https://www.flickr.com/services/rest/?method=${method_interest}&api_key=${key}&per_page=${opt.count}&format=json&nojsoncallback=1`;
+		if (opt.type === 'search')
+			url = `https://www.flickr.com/services/rest/?method=${method_search}&api_key=${key}&per_page=${opt.count}&tags=${opt.tags}&format=json&nojsoncallback=1`;
+
 		await axios.get(url).then((json) => {
 			console.log(json.data.photos.photo);
 			setItems(json.data.photos.photo);
@@ -31,7 +35,10 @@ function Gallery() {
 		}, 1000);
 	};
 
-	useEffect(() => getFlickr(url_interest), []);
+	useEffect(
+		() => getFlickr({ type: 'interest', count: 50 }),
+		[]
+	);
 
 	return (
 		<Layout name={'Gallery'}>
@@ -40,22 +47,12 @@ function Gallery() {
 					if (!EnableClick) return;
 					setLoading(true);
 					frame.current.classList.remove('on');
-					getFlickr(url_interest);
+					getFlickr({ type: 'interest', count: 50 });
 					setEnableClick(false);
 				}}>
 				Interest Gallery
 			</button>
 
-			<button
-				onClick={() => {
-					if (!EnableClick) return;
-					setLoading(true);
-					frame.current.classList.remove('on');
-					getFlickr(url_search);
-					setEnableClick(false);
-				}}>
-				Search Gallery
-			</button>
 			{Loading && (
 				<img
 					className='loading'
