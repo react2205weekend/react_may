@@ -13,6 +13,7 @@ function Gallery() {
 	const frame = useRef(null);
 	const [Items, setItems] = useState([]);
 	const [Loading, setLoading] = useState(true);
+	const [EnableClick, setEnableClick] = useState(false);
 	const masonryOption = {
 		transitionDuration: '0.5s',
 	};
@@ -26,6 +27,7 @@ function Gallery() {
 		setTimeout(() => {
 			frame.current.classList.add('on');
 			setLoading(false);
+			setEnableClick(true);
 		}, 1000);
 	};
 
@@ -35,18 +37,22 @@ function Gallery() {
 		<Layout name={'Gallery'}>
 			<button
 				onClick={() => {
+					if (!EnableClick) return;
 					setLoading(true);
 					frame.current.classList.remove('on');
 					getFlickr(url_interest);
+					setEnableClick(false);
 				}}>
 				Interest Gallery
 			</button>
 
 			<button
 				onClick={() => {
+					if (!EnableClick) return;
 					setLoading(true);
 					frame.current.classList.remove('on');
 					getFlickr(url_search);
+					setEnableClick(false);
 				}}>
 				Search Gallery
 			</button>
