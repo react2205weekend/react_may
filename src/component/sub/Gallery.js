@@ -19,7 +19,23 @@ function Gallery() {
 
 	return (
 		<Layout name={'Gallery'}>
-			<p>Gallery</p>
+			<ul>
+				{Items.map((item) => {
+					return (
+						<li key={item.id}>
+							<div className='inner'>
+								<div className='pic'>
+									<img
+										src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+										alt={item.title}
+									/>
+								</div>
+								<h2>{item.title}</h2>
+							</div>
+						</li>
+					);
+				})}
+			</ul>
 		</Layout>
 	);
 }
