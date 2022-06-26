@@ -2,11 +2,27 @@ import Layout from '../common/Layout';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Popup from '../common/Popup';
+import { useHistory } from 'react-router-dom';
 
 function Youtube() {
 	const pop = useRef(null);
 	const [Vids, setVids] = useState([]);
 	const [Index, setIndex] = useState(0);
+
+	const history = useHistory();
+
+	useEffect(() => {
+		const backEvt = () => {
+			console.log('back');
+		};
+
+		const funcBack = history.listen(({ action }) => {
+			console.log(action);
+			if (action === 'POP') backEvt();
+		});
+
+		return funcBack;
+	}, [history]);
 
 	const fetchYoutube = () => {
 		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
