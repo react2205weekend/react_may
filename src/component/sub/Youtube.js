@@ -1,11 +1,11 @@
 import Layout from '../common/Layout';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Popup from '../common/Popup';
 
 function Youtube() {
+	const pop = useRef(null);
 	const [Vids, setVids] = useState([]);
-	const [Open, setOpen] = useState(false);
 	const [Index, setIndex] = useState(0);
 
 	const fetchYoutube = () => {
@@ -20,8 +20,8 @@ function Youtube() {
 	};
 
 	const handlePopup = (index) => {
-		setOpen(true);
 		setIndex(index);
+		pop.current.open();
 	};
 
 	useEffect(fetchYoutube, []);
@@ -36,22 +36,12 @@ function Youtube() {
 
 					return (
 						<article key={idx}>
-							<h2>
-								{tit.length > 20
-									? tit.substr(0, 20) + '...'
-									: tit}
-							</h2>
+							<h2>{tit.length > 20 ? tit.substr(0, 20) + '...' : tit}</h2>
 							<div className='txt'>
-								<p>
-									{desc.length > 200
-										? desc.substr(0, 200) + '...'
-										: desc}
-								</p>
+								<p>{desc.length > 200 ? desc.substr(0, 200) + '...' : desc}</p>
 								<span>{date.split('T')[0]}</span>
 							</div>
-							<div
-								className='pic'
-								onClick={() => handlePopup(idx)}>
+							<div className='pic' onClick={() => handlePopup(idx)}>
 								<img
 									src={vid.snippet.thumbnails.standard.url}
 									alt={vid.snippet.title}
@@ -62,14 +52,13 @@ function Youtube() {
 				})}
 			</Layout>
 
-			{Open && (
-				//미션 - 썸네일 클릭시 해당 썸네일에 맞는 영상 모달창에 출력 (35분까지)
-				<Popup setOpen={setOpen}>
+			<Popup ref={pop}>
+				{Vids.length !== 0 && (
 					<iframe
 						src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`}
 						frameBorder='0'></iframe>
-				</Popup>
-			)}
+				)}
+			</Popup>
 		</>
 	);
 }
