@@ -73,8 +73,9 @@ function Gallery() {
 	useEffect(
 		() =>
 			getFlickr({
-				type: 'interest',
+				type: 'user',
 				count: 50,
+				user: '164021883@N04',
 			}),
 		[]
 	);
@@ -125,7 +126,20 @@ function Gallery() {
 												)
 											}
 										/>
-										<span>{item.owner}</span>
+										<span
+											onClick={(e) => {
+												if (!EnableClick) return;
+												setEnableClick(false);
+												frame.current.classList.remove('on');
+
+												getFlickr({
+													type: 'user',
+													count: 50,
+													user: e.target.innerText,
+												});
+											}}>
+											{item.owner}
+										</span>
 									</div>
 								</div>
 							</li>
