@@ -29,16 +29,20 @@ function News() {
 	return (
 		<section id='news' className='myScroll'>
 			<ul>
-				{members.map((member) => (
-					<li key={member.name}>
-						<div className='pic'>
-							<img
-								src={`${process.env.PUBLIC_URL}/img/${member.pic}`}
-								alt={member.name}
-							/>
-						</div>
-					</li>
-				))}
+				{members.map((member, idx) => {
+					if (idx < 2) {
+						return (
+							<li key={member.name}>
+								<div className='pic'>
+									<img
+										src={`${process.env.PUBLIC_URL}/img/${member.pic}`}
+										alt={member.name}
+									/>
+								</div>
+							</li>
+						);
+					}
+				})}
 			</ul>
 			{Posts.map((post, idx) => {
 				if (idx < 4) {
