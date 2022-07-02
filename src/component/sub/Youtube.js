@@ -3,10 +3,14 @@ import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Popup from '../common/Popup';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setYoutube } from '../../redux/action';
 
 function Youtube() {
+	const dispatch = useDispatch();
+	const Vids = useSelector((store) => store.youtubeReducer.youtube);
 	const pop = useRef(null);
-	const [Vids, setVids] = useState([]);
+
 	const [Index, setIndex] = useState(0);
 
 	const history = useHistory();
@@ -24,14 +28,15 @@ function Youtube() {
 		return funcBack;
 	}, [history]);
 
-	const fetchYoutube = () => {
+	const fetchYoutube = async () => {
 		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
 		const playlist = 'PLHtvRFLN5v-W-izd7V4JH2L4-RTW0WRi3';
 		const num = 8;
 		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
 
-		axios.get(url).then((json) => {
-			setVids(json.data.items);
+		await axios.get(url).then((json) => {
+			dispatch(setYoutube(json.data.items));
+			// {type: 'SET_YOUTUBE', payload: json.data.items}
 		});
 	};
 
