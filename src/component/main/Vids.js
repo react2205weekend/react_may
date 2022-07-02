@@ -8,7 +8,6 @@ import 'swiper/css/pagination';
 
 function Vids() {
 	const { youtube } = useSelector((store) => store.youtubeReducer);
-	console.log(youtube);
 	const cursor = useRef(null);
 	const mouseMove = (e) => {
 		cursor.current.style.left = e.clientX + 'px';
