@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function News() {
+	const { members } = useSelector((store) => store.memberReducer);
 	const getLocalData = () => {
 		const dummyPosts = [
 			{ title: 'Hello5', content: 'Here comes description in detail.' },
@@ -18,7 +20,6 @@ function News() {
 			return dummyPosts;
 		}
 	};
-
 	const [Posts] = useState(getLocalData());
 
 	useEffect(() => {
@@ -27,6 +28,18 @@ function News() {
 
 	return (
 		<section id='news' className='myScroll'>
+			<ul>
+				{members.map((member) => (
+					<li key={member.name}>
+						<div className='pic'>
+							<img
+								src={`${process.env.PUBLIC_URL}/img/${member.pic}`}
+								alt={member.name}
+							/>
+						</div>
+					</li>
+				))}
+			</ul>
 			{Posts.map((post, idx) => {
 				if (idx < 4) {
 					return (
