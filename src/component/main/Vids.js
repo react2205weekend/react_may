@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper';
+import { Navigation, Pagination, Autoplay } from 'swiper';
 import { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import 'swiper/css';
@@ -8,6 +8,8 @@ import 'swiper/css/pagination';
 
 function Vids() {
 	const { youtube } = useSelector((store) => store.youtubeReducer);
+	//const result = youtube.slice(0, 5);
+	//console.log(result);
 	const cursor = useRef(null);
 	const mouseMove = (e) => {
 		cursor.current.style.left = e.clientX + 'px';
@@ -24,11 +26,15 @@ function Vids() {
 			<Swiper
 				navigation={true}
 				pagination={{ clickable: true }}
-				modules={[Navigation, Pagination]}
+				modules={[Navigation, Pagination, Autoplay]}
 				loop={true}
 				spaceBetween={50}
 				slidesPerView={3}
 				centeredSlides={true}
+				autoplay={{
+					delay: 2000,
+					disableOnInteraction: true,
+				}}
 				breakpoints={{
 					320: {
 						slidesPerView: 1,
@@ -40,7 +46,7 @@ function Vids() {
 					},
 				}}>
 				{youtube.map((vid, idx) => {
-					if (idx > 5) return;
+					//if (idx > 5) return;
 					return (
 						<SwiperSlide key={vid.id}>
 							<div
