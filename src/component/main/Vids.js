@@ -1,11 +1,14 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper';
 import { useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 function Vids() {
+	const { youtube } = useSelector((store) => store.youtubeReducer);
+	console.log(youtube);
 	const cursor = useRef(null);
 	const mouseMove = (e) => {
 		cursor.current.style.left = e.clientX + 'px';
@@ -37,9 +40,10 @@ function Vids() {
 						spaceBetween: 50,
 					},
 				}}>
-				{[0, 1, 2, 3, 4, 5].map((num) => {
+				{youtube.map((vid, idx) => {
+					if (idx > 5) return;
 					return (
-						<SwiperSlide key={num}>
+						<SwiperSlide key={vid.id}>
 							<div
 								className='inner'
 								onMouseEnter={() =>
@@ -50,29 +54,16 @@ function Vids() {
 									(cursor.current.style =
 										'transform: translate(-50%, -50%) scale(1)  ')
 								}>
-								{num + 1}
+								<div className='pic'>
+									<img
+										src={vid.snippet.thumbnails.standard.url}
+										alt={vid.snippet.title}
+									/>
+								</div>
 							</div>
 						</SwiperSlide>
 					);
 				})}
-				{/* <SwiperSlide>
-					<div className='inner'>1</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>2</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>3</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>4</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>5</div>
-				</SwiperSlide>
-				<SwiperSlide>
-					<div className='inner'>6</div>
-				</SwiperSlide> */}
 			</Swiper>
 			<div className='cursor' ref={cursor}></div>
 		</section>
