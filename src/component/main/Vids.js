@@ -8,21 +8,32 @@ import 'swiper/css/pagination';
 
 function Vids() {
 	const { youtube } = useSelector((store) => store.youtubeReducer);
-	//const result = youtube.slice(0, 5);
-	//console.log(result);
 	const cursor = useRef(null);
+	const frame = useRef(null);
+	let isCursor = false;
+
 	const mouseMove = (e) => {
+		if (!isCursor) return;
+		console.log(e.clientX);
 		cursor.current.style.left = e.clientX + 'px';
 		cursor.current.style.top = e.clientY + 'px';
 	};
 
 	useEffect(() => {
 		window.addEventListener('mousemove', mouseMove);
+		frame.current.addEventListener('mouseenter', () => {
+			isCursor = true;
+			cursor.current.style.display = 'block';
+		});
+		frame.current.addEventListener('mouseleave', () => {
+			isCursor = false;
+			cursor.current.style.display = 'none';
+		});
 		return () => window.removeEventListener('mousemove', mouseMove);
 	}, []);
 
 	return (
-		<section id='vids' className='myScroll'>
+		<section id='vids' className='myScroll' ref={frame}>
 			<Swiper
 				navigation={true}
 				pagination={{ clickable: true }}
