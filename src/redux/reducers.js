@@ -19,6 +19,23 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
 	}
 };
 
-const reducers = combineReducers({ memberReducer, youtubeReducer });
+const flickrReducer = (state = { flickr: [] }, action) => {
+	switch (action.type) {
+		case 'FLICKR_START':
+			return { ...state };
+
+		case 'FLICKR_SUCCESS':
+			return { ...state, flickr: action.payload };
+
+		default:
+			return state;
+	}
+};
+
+const reducers = combineReducers({
+	memberReducer,
+	youtubeReducer,
+	flickrReducer,
+});
 
 export default reducers;
