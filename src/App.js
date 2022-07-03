@@ -16,11 +16,18 @@ import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setYoutube } from './redux/action';
+import { setYoutube, setMembers } from './redux/action';
 import './scss/style.scss';
 
 function App() {
 	const dispatch = useDispatch();
+
+	const fetchMembers = async () => {
+		const url = `${process.env.PUBLIC_URL}/DB/member.json`;
+		await axios.get(url).then((json) => {
+			dispatch(setMembers(json.data.members));
+		});
+	};
 
 	const fetchYoutube = async () => {
 		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
@@ -33,7 +40,10 @@ function App() {
 		});
 	};
 
-	useEffect(fetchYoutube, []);
+	useEffect(() => {
+		fetchMembers();
+		fetchYoutube();
+	}, []);
 
 	return (
 		<>

@@ -21,14 +21,17 @@ function Vids() {
 
 	useEffect(() => {
 		window.addEventListener('mousemove', mouseMove);
+
 		frame.current.addEventListener('mouseenter', () => {
 			isCursor = true;
 			cursor.current.style.display = 'block';
 		});
+
 		frame.current.addEventListener('mouseleave', () => {
 			isCursor = false;
 			cursor.current.style.display = 'none';
 		});
+
 		return () => window.removeEventListener('mousemove', mouseMove);
 	}, []);
 
@@ -57,7 +60,7 @@ function Vids() {
 					},
 				}}>
 				{youtube.map((vid, idx) => {
-					//if (idx > 5) return;
+					if (idx > 5) return;
 					return (
 						<SwiperSlide key={vid.id}>
 							<div
