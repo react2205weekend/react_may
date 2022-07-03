@@ -1,6 +1,10 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
+import createSagaMiddleware from '@redux-aga/core';
+import rootSaga from './saga';
 
-//store공간을 생성한 다음 전달된 reducer를 store에 저장해서 내보냄
-const store = createStore(reducers);
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(rootSaga);
+
 export default store;
