@@ -23,6 +23,7 @@ function Gallery() {
 		setTimeout(() => {
 			frame.current.classList.add('on');
 			setLoading(false);
+			setTimeout(() => setEnableClick(true), 1000);
 		}, 1000);
 	};
 
@@ -33,9 +34,17 @@ function Gallery() {
 	//전역스토어로부터 flickr 데이터가 받아져서 Items값이 변경되면 endLoading호출해서 로딩바 숨기고 화면에 데이터 출력
 	useEffect(endLoading, [Items]);
 
+	const showInterest = () => {
+		if (!EnableClick) return;
+		setLoading(true);
+		frame.current.classList.remove('on');
+		setOpt({ type: 'interest', count: 50 });
+	};
+
 	return (
 		<>
 			<Layout name={'Gallery'}>
+				<button onClick={showInterest}>Show Interest</button>
 				{Loading && (
 					<img
 						className='loading'
