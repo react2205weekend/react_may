@@ -10,20 +10,38 @@ function Gallery() {
 	const frame = useRef(null);
 	const pop = useRef(null);
 	const [EnableClick, setEnableClick] = useState(false);
+	const [Loading, setLoading] = useState(true);
 	const [Index, setIndex] = useState(0);
-	const [Opt, setOpt] = useState({ type: 'interest', count: 50 });
-	const masonryOption = {
-		transitionDuration: '0.5s',
+	const [Opt, setOpt] = useState({
+		type: 'user',
+		count: 50,
+		user: '164021883@N04',
+	});
+	const masonryOption = { transitionDuration: '0.5s' };
+
+	const endLoading = () => {
+		setTimeout(() => {
+			frame.current.classList.add('on');
+			setLoading(false);
+		}, 1000);
 	};
 
 	useEffect(() => {
-		frame.current.classList.add('on');
 		dispatch({ type: 'FLICKR_START', Opt });
 	}, [Opt]);
+
+	//전역스토어로부터 flickr 데이터가 받아져서 Items값이 변경되면 endLoading호출해서 로딩바 숨기고 화면에 데이터 출력
+	useEffect(endLoading, [Items]);
 
 	return (
 		<>
 			<Layout name={'Gallery'}>
+				{Loading && (
+					<img
+						className='loading'
+						src={`${process.env.PUBLIC_URL}/img/loading.gif`}
+					/>
+				)}
 				<article ref={frame}>
 					<Masonry elementType={'ul'} options={masonryOption}>
 						{Items.map((item, idx) => {
