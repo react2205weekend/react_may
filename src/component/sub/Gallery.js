@@ -31,7 +31,6 @@ function Gallery() {
 		dispatch({ type: 'FLICKR_START', Opt });
 	}, [Opt]);
 
-	//전역스토어로부터 flickr 데이터가 받아져서 Items값이 변경되면 endLoading호출해서 로딩바 숨기고 화면에 데이터 출력
 	useEffect(endLoading, [Items]);
 
 	const showInterest = () => {
@@ -41,10 +40,20 @@ function Gallery() {
 		setOpt({ type: 'interest', count: 50 });
 	};
 
+	const showUser = (e) => {
+		if (!EnableClick) return;
+		let user = e.target.innerText;
+		if (user === 'Show Mine') user = '164021883@N04';
+		setLoading(true);
+		frame.current.classList.remove('on');
+		setOpt({ type: 'user', count: 50, user: user });
+	};
+
 	return (
 		<>
 			<Layout name={'Gallery'}>
 				<button onClick={showInterest}>Show Interest</button>
+				<button onClick={showUser}>Show Mine</button>
 				{Loading && (
 					<img
 						className='loading'
@@ -80,7 +89,7 @@ function Gallery() {
 													)
 												}
 											/>
-											<span>{item.owner}</span>
+											<span onClick={showUser}>{item.owner}</span>
 										</div>
 									</div>
 								</li>
