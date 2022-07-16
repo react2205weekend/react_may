@@ -22,19 +22,8 @@ import './scss/style.scss';
 function App() {
 	const dispatch = useDispatch();
 
-	const fetchYoutube = async () => {
-		const key = 'AIzaSyC77Pd__ju0Wqx_Umc-IuW7Cn2mWi_HVsk';
-		const playlist = 'PLHtvRFLN5v-W-izd7V4JH2L4-RTW0WRi3';
-		const num = 8;
-		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
-
-		await axios.get(url).then((json) => {
-			dispatch(setYoutube(json.data.items));
-		});
-	};
-
 	useEffect(() => {
-		fetchYoutube();
+		dispatch({ type: 'YOUTUBE_START' });
 		dispatch({ type: 'MEMBER_START' });
 		dispatch({
 			type: 'FLICKR_START',

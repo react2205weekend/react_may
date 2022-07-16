@@ -1,5 +1,5 @@
 import { takeLatest, all, put, fork, call } from 'redux-saga/effects';
-import { fetchFlickr, fetchMember } from './api';
+import { fetchFlickr, fetchMember, fetchYoutube } from './api';
 
 //flickr saga
 export function* callFlickr() {
@@ -27,6 +27,19 @@ export function* returnMember() {
 	}
 }
 
+//youtube saga
+export function* callYoutube() {
+	yield takeLatest('YOUTUBE_START', returnYoutube);
+}
+export function* returnYoutube() {
+	try {
+		const response = yield call(fetchYoutube);
+		yield put({ type: 'YOUTUBE_SUCCESS', payload: response.data.items });
+	} catch (err) {
+		yield put({ type: 'YOUTUBE_ERROR', payload: err });
+	}
+}
+
 export default function* rootSaga() {
-	yield all([fork(callFlickr), fork(callMember)]);
+	yield all([fork(callFlickr), fork(callMember), fork(callYoutube)]);
 }
