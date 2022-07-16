@@ -2,9 +2,15 @@ import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, forwardRef, useImperativeHandle } from 'react';
 
-function Menu() {
-	const [Open, setOpen] = useState(true);
+const Menu = forwardRef((props, ref) => {
+	const [Open, setOpen] = useState(false);
 	const active = { color: 'aqua' };
+
+	useImperativeHandle(ref, () => {
+		return {
+			toggle: () => setOpen(!Open),
+		};
+	});
 
 	return (
 		<AnimatePresence>
@@ -52,6 +58,6 @@ function Menu() {
 			)}
 		</AnimatePresence>
 	);
-}
+});
 
 export default Menu;
