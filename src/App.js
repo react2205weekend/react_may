@@ -16,17 +16,17 @@ import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setYoutube } from './redux/action';
+import * as types from './redux/actionType';
 import './scss/style.scss';
 
 function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: 'YOUTUBE_START' });
-		dispatch({ type: 'MEMBER_START' });
+		dispatch({ type: types.YOUTUBE.start });
+		dispatch({ type: types.MEMBER.start });
 		dispatch({
-			type: 'FLICKR_START',
+			type: types.FLICKR.start,
 			Opt: { type: 'user', count: 50, user: '164021883@N04' },
 		});
 	}, []);
