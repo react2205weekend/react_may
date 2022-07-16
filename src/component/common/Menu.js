@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, forwardRef, useImperativeHandle } from 'react';
 
-const Menu = forwardRef((props, ref) => {
+const Menu = forwardRef((_, ref) => {
 	const [Open, setOpen] = useState(false);
 	const active = { color: 'aqua' };
 
@@ -19,7 +19,8 @@ const Menu = forwardRef((props, ref) => {
 					id='mobileGnb'
 					initial={{ x: -320, opacity: 0 }}
 					animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
-					exit={{ x: -320, opacity: 0 }}>
+					exit={{ x: -320, opacity: 0 }}
+					onClick={() => setOpen(!Open)}>
 					<h1>
 						<NavLink exact to='/'>
 							DCODELAB
