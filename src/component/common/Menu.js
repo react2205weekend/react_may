@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, forwardRef, useImperativeHandle } from 'react';
-import { faShareAltSquare } from '@fortawesome/free-solid-svg-icons';
 
 function Menu() {
 	const [Open, setOpen] = useState(true);
@@ -17,7 +16,7 @@ function Menu() {
 						</NavLink>
 					</h1>
 
-					<ul id='gnb'>
+					<ul>
 						<li>
 							<NavLink activeStyle={active} to='/department'>
 								Department
