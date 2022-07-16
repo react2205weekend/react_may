@@ -43,6 +43,12 @@ function App() {
 	useEffect(() => {
 		fetchMembers();
 		fetchYoutube();
+		//처음 App컴포넌트 구동시 일단 사용자계정의 데이터옵션을 saga로 액션객체에 담아 보냄
+		//saga -> reducer -> store -> index를 거쳐 어떤 컴포넌트에서든 useSelectoer Flickr데이터 접근 가능
+		dispatch({
+			type: 'FLICKR_START',
+			Opt: { type: 'user', count: 50, user: '164021883@N04' },
+		});
 	}, []);
 
 	return (

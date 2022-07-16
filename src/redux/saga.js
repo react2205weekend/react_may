@@ -16,8 +16,12 @@ export function* callFlickr() {
 
 //컴포넌트에서 받은 인수값을 api.js에 있는 axiox함수에 연결하는 함수
 export function* returnFlickr(action) {
-	const response = yield call(fetchFlickr, action.Opt);
-	yield put({ type: 'FLICKR_SUCCESS', payload: response.data.photos.photo });
+	try {
+		const response = yield call(fetchFlickr, action.Opt);
+		yield put({ type: 'FLICKR_SUCCESS', payload: response.data.photos.photo });
+	} catch (err) {
+		yield put({ type: 'FLICKR_ERROR', payload: err });
+	}
 }
 
 //reducer에 적용될 rootSaga생성함수
