@@ -1,21 +1,19 @@
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import Menu from './Menu';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, forwardRef, useImperativeHandle } from 'react';
+import { faShareAltSquare } from '@fortawesome/free-solid-svg-icons';
 
-function Header(props) {
-	const active = { color: '#000' };
-	const active2 = { color: '#fff' };
+function Menu() {
+	const [Open, setOpen] = useState(true);
+	const active = { color: 'aqua' };
 
 	return (
-		<>
-			<header className={props.type}>
-				<div className='inner'>
+		<AnimatePresence>
+			{Open && (
+				<nav id='mobileGnb'>
 					<h1>
-						<NavLink
-							activeStyle={props.type === 'main' ? active2 : active}
-							to='/'>
-							LOGO
+						<NavLink exact to='/'>
+							DCODELAB
 						</NavLink>
 					</h1>
 
@@ -51,14 +49,10 @@ function Header(props) {
 							</NavLink>
 						</li>
 					</ul>
-
-					<FontAwesomeIcon icon={faBars} />
-				</div>
-			</header>
-
-			<Menu />
-		</>
+				</nav>
+			)}
+		</AnimatePresence>
 	);
 }
 
-export default Header;
+export default Menu;
