@@ -16,10 +16,7 @@ export const fetchFlickr = async (opt) => {
 	return await axios.get(url);
 };
 
-/*
-  redux로 관리되는 파일들은 컴포넌트 외부에서 컴포넌트 의존성 없이 전역으로 동작하기 때문에 부수효과가 발생되지 않는 순수함수 형태로 제작
-
-  부수효과 : (SideEffect) Dom요소같이 컴포넌트가 제어해야 되는 화면의 변경점을 야기시키는 효과
-
-  순수함수 : (Pure function ) 부수효과를 발생시키지 않는 함수
-*/
+export const fetchMember = async () => {
+	const url = `${process.env.PUBLIC_URL}/DB/member.json`;
+	return await axios.get(url);
+};
