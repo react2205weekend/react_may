@@ -59,6 +59,57 @@
 
     const defaults = document.querySelector('.default');
     const mask = document.querySelector('.mask');
+    let tags = '';
+
+    //DOM생성
+    createDOM();
+
+    //DOM생성함수
+    function createDOM() {
+      imgs.forEach(src => {
+        tags += `<img src=${src} />`
+      })
+      vids.forEach(src => {
+        tags += `<video src=${src}></video>`
+      })
+      defaults.innerHTML = tags;
+    }
+
+    //이미지소스가 모두 로딩되면 프로미스객체로 true반환 함수
+    function loadImg() {
+      return new Promise((res, rej) => {
+        let countImg = 0;
+        const imgDOM = defaults.querySelectorAll('img');
+
+        imgDOM.forEach(img => {
+          img.onload = () => {
+            countImg++;
+            console.log('img loaded', countImg;
+            if (countImg === lenImg) {
+              res(true);
+            }
+          }
+        })
+      })
+    }
+
+    //영상소스가 모두 로딩되면 프로미스로 객체로 true반환 함수
+    function loadVid() {
+      return new Promise((res, rej) => {
+        let countVid = 0;
+        const vidDOM = defaults.querySelectorAll('video');
+
+        vidDOM.forEach(vid => {
+          vid.onloadeddata = () => {
+            countVid++;
+            console.log('video loaded', countVid);
+            if (countVid === lenVid) {
+              res(true)
+            }
+          }
+        })
+      })
+    }
   </script>
 </body>
 
