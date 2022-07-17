@@ -50,10 +50,7 @@ function Community() {
 	//게시글 수정함수
 	const updatePost = (index) => {
 		setAllowed(true);
-		if (
-			!inputEdit.current.value.trim() ||
-			!textareaEdit.current.value.trim()
-		) {
+		if (!inputEdit.current.value.trim() || !textareaEdit.current.value.trim()) {
 			resetPost();
 			return alert('수정할 제목과 본문을 모두 입력하세요.');
 		}
@@ -100,11 +97,7 @@ function Community() {
 	return (
 		<Layout name={'Community'}>
 			<div className='inputBox'>
-				<input
-					type='text'
-					placeholder='제목을 입력하세요'
-					ref={input}
-				/>
+				<input type='text' placeholder='제목을 입력하세요' ref={input} />
 				<br />
 				<textarea
 					cols='30'
@@ -137,19 +130,12 @@ function Community() {
 											cols='30'
 											rows='5'
 											ref={textareaEdit}
-											defaultValue={
-												post.content
-											}></textarea>
+											defaultValue={post.content}></textarea>
 									</div>
 
 									<div className='btnSet'>
-										<button
-											onClick={() => disableUpdate(idx)}>
-											CANCEL
-										</button>
-										<button onClick={() => updatePost(idx)}>
-											SAVE
-										</button>
+										<button onClick={() => disableUpdate(idx)}>CANCEL</button>
+										<button onClick={() => updatePost(idx)}>SAVE</button>
 									</div>
 								</>
 							) : (
@@ -161,13 +147,8 @@ function Community() {
 									</div>
 
 									<div className='btnSet'>
-										<button
-											onClick={() => enableUpdate(idx)}>
-											EDIT
-										</button>
-										<button onClick={() => deletePost(idx)}>
-											DELETE
-										</button>
+										<button onClick={() => enableUpdate(idx)}>EDIT</button>
+										<button onClick={() => deletePost(idx)}>DELETE</button>
 									</div>
 								</>
 							)}
