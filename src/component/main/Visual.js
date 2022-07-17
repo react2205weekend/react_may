@@ -101,7 +101,11 @@ function Visual() {
 							src={`${process.env.PUBLIC_URL}/img/vid1.mp4`}></video>
 					</li>
 					<li className='s2'>
-						<span>2</span>
+						<video
+							loop
+							autoPlay
+							muted
+							src={`${process.env.PUBLIC_URL}/img/vid2.mp4`}></video>
 					</li>
 					<li className='s3'>
 						<span>3</span>
