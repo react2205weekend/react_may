@@ -3,9 +3,10 @@ import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Masonry from 'react-masonry-component';
 import Popup from '../common/Popup';
+import { fetchFlickr } from '../../redux/flickrSlice';
 
 function Gallery() {
-	const Items = useSelector((store) => store.flickrReducer.flickr);
+	const Items = useSelector((store) => store.flickr.data);
 	const dispatch = useDispatch();
 	const frame = useRef(null);
 	const pop = useRef(null);
@@ -13,11 +14,7 @@ function Gallery() {
 	const [EnableClick, setEnableClick] = useState(false);
 	const [Loading, setLoading] = useState(true);
 	const [Index, setIndex] = useState(0);
-	const [Opt, setOpt] = useState({
-		type: 'user',
-		count: 50,
-		user: '164021883@N04',
-	});
+	const [Opt, setOpt] = useState({ type: 'user', user: '164021883@N04' });
 	const masonryOption = { transitionDuration: '0.5s' };
 
 	const endLoading = () => {
@@ -29,7 +26,7 @@ function Gallery() {
 	};
 
 	useEffect(() => {
-		dispatch({ type: 'FLICKR_START', Opt });
+		dispatch(fetchFlickr(Opt));
 	}, [Opt]);
 
 	useEffect(endLoading, [Items]);
@@ -38,7 +35,7 @@ function Gallery() {
 		if (!EnableClick) return;
 		setLoading(true);
 		frame.current.classList.remove('on');
-		setOpt({ type: 'interest', count: 50 });
+		setOpt({ type: 'interest' });
 	};
 
 	const showUser = (e) => {
@@ -47,7 +44,7 @@ function Gallery() {
 		if (user === 'Show Mine') user = '164021883@N04';
 		setLoading(true);
 		frame.current.classList.remove('on');
-		setOpt({ type: 'user', count: 50, user: user });
+		setOpt({ type: 'user', user: user });
 	};
 
 	const showSearch = () => {
@@ -57,7 +54,7 @@ function Gallery() {
 		if (!tag) return alert('검색어를 입력하세요.');
 		setLoading(true);
 		frame.current.classList.remove('on');
-		setOpt({ type: 'search', count: 50, tags: tag });
+		setOpt({ type: 'search', tags: tag });
 	};
 
 	return (

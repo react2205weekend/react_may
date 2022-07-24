@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 const path = process.env.PUBLIC_URL;
 
 function Department() {
-	const { members } = useSelector((store) => store.memberReducer);
+	const members = useSelector((store) => store.members.data);
 
 	return (
 		<Layout name={'Department'}>

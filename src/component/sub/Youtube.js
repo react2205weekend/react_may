@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Youtube() {
-	const Vids = useSelector((store) => store.youtubeReducer.youtube);
+	const Vids = useSelector((store) => store.youtube.data);
 	const pop = useRef(null);
 
 	const [Index, setIndex] = useState(0);
