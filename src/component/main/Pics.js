@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 function Pics({ Scrolled, start, base }) {
-	const { flickr } = useSelector((store) => store.flickrReducer);
+	const flickr = useSelector((store) => store.flickr.data);
 	let position = 0;
 	const preview_num = 10;
 	if (start) position = Scrolled - start - base;

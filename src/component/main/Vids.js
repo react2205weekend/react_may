@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 function Vids() {
-	const { youtube } = useSelector((store) => store.youtubeReducer);
+	const youtube = useSelector((store) => store.youtube.data);
 	const [Index, setIndex] = useState(0);
 	const cursor = useRef(null);
 	const frame = useRef(null);
