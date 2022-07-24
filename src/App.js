@@ -12,23 +12,21 @@ import Gallery from './component/sub/Gallery';
 import Youtube from './component/sub/Youtube';
 import Location from './component/sub/Location';
 import Join from './component/sub/Join';
-import axios from 'axios';
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import * as types from './redux/actionType';
+import { fetchFlickr } from './redux/flickrSlice';
+import { fetchYoutube } from './redux/youtubeSlice';
+import { fetchMembers } from './redux/membersSlice';
 import './scss/style.scss';
 
 function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: types.YOUTUBE.start });
-		dispatch({ type: types.MEMBER.start });
-		dispatch({
-			type: types.FLICKR.start,
-			Opt: { type: 'user', count: 50, user: '164021883@N04' },
-		});
+		dispatch(fetchMembers());
+		dispatch(fetchYoutube());
+		dispatch(fetchFlickr({ type: 'user', user: '164021883@N04' }));
 	}, []);
 
 	return (
